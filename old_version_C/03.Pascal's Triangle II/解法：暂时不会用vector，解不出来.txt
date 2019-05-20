@@ -1,0 +1,51 @@
+//第一次调试的时候的bug不是因为vector不会用，而是定义数组的时候必须是a[1]。
+
+class Solution {
+public:
+    bool isEven(int a){
+        if(a%2==0){
+            return true;
+        }
+        return false;
+    }
+
+    vector<int> getRow(int rowIndex) {
+        vector<int> vec(0,rowIndex);
+        int a[rowIndex+1]={0};//a是偶数行
+        int b[rowIndex+1]={0};
+        a[0]=1;
+        if(rowIndex>0) b[0]=b[1]=1;
+        if(rowIndex==0){
+             vec.push_back(1);
+             return vec;
+        }else if(rowIndex==1){
+            vec.push_back(1);
+            vec.push_back(1);
+            return vec;
+        }else{
+            for(int j=2;j<=rowIndex;j+=2){
+                    for(int i=1;i<=rowIndex;i++){
+                        a[i]=b[i-1]+b[i];
+                        
+                    }
+                    for(int i=1;i<=rowIndex;i++){
+                        b[i]=a[i-1]+a[i];
+                    }
+                }
+            if(isEven(rowIndex)){
+                for(int n=0;n<=rowIndex;n++){
+                    vec.push_back(a[n]);
+                }
+                return vec;
+            }else{
+                for(int n=0;n<=rowIndex;n++){
+                    vec.push_back(b[n]);
+                }
+                return vec;
+            }
+
+        }
+        
+        
+    }
+};

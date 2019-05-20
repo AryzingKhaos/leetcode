@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if(preorder.empty()) return NULL;
+        int rootval=*preorder.begin();
+        TreeNode* root=new TreeNode(rootval);
+        preorder.erase(preorder.begin());
+        if(preorder.empty()) return root;//如果为空，则直接返回
+        vector<int> inorderleft;
+        vector<int> inorderright;
+        vector<int> preorderleft;
+        vector<int> preorderright;
+        vector<int>::iterator it=inorder.begin();
+        
+        
+        //中序遍历重构
+        while(*it!=rootval){
+            inorderleft.push_back(*it);//插入左子树
+            it++;
+        }
+        it++;//因为上一个循环结束的时候，it指向的是根节点。
+        while(it!=inorder.end()){
+            inorderright.push_back(*it);//插入右子树
+            it++;
+        }
+        
+        //前序遍历重构
+        int i=0;
+        while(i<inorderleft.size()){
+            preorderleft.push_back(*preorder.begin());
+            preorder.erase(preorder.begin());
+            i++;
+        }
+        i=0;
+        while(i<inorderright.size()){
+            preorderright.push_back(*preorder.begin());
+            preorder.erase(preorder.begin());
+            i++;
+        }
+        root->left=buildTree(preorderleft,inorderleft);
+        root->right=buildTree(preorderright,inorderright);
+        
+        return root;
+        
+    }
+};

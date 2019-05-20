@@ -1,0 +1,79 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int pom=0;//关键数字
+    
+    //定义“差异结点”
+    //如果一个结点的[左子树的极右]和[右子树的极左]不一样高，说明这个结点就是差异结点
+
+
+
+    int gethighofrrr(TreeNode* root){//获取根节点到最右边的叶子的度
+        int n=0;
+        while(root){
+            n+=1;
+            root=root->right;
+        }
+        return n;
+    }
+    
+
+    int gethighoflll(TreeNode* root){//获取根节点到最左边的叶子的度
+        int n=0;
+        while(root){
+            n+=1;
+            root=root->left;
+        }
+        return n;
+    }
+    
+    
+    void repom(TreeNode* root){
+        if(gethighofrrr(root)==gethighoflll(root)){
+            pom=0;//如果根的极左和极右一样高，说明它是一棵完美二叉树
+        }else if(gethighofrrr(root->left)!=gethighoflll(root->right)){
+            pom+=pow(2,gethighoflll(root->left)-1);//如果根的左子树的极右和右子树的极左不一样高，那么说明这个根节点就是差异结点。这时候左子树的极左和极右高度一样，右子树的极左和极右高度一样。
+        }else if(gethighofrrr(root->left)==gethighoflll(root->right)){
+            //如果一样高，那么递归
+            if(gethighoflll(root->left)!=gethighofrrr(root->left)){
+                //对左子树进行讨论，如果左子树的极左和极右不一样，那么必然是极右小于极左。
+                pom+=pow(2,gethighofrrr(root->left));
+                repom(root->left);
+            }else if(gethighoflll(root->right)!=gethighofrrr(root->right)){
+                repom(root->right);//这里不需要将pom减一个值。
+            }
+        }
+    }
+    
+    
+    int depow(int a,int b){
+        int n=0;
+        if(b!=0){
+            for(int i=0;i<b;i++){
+                n+=pow(2,i);
+            }
+        }
+        return n;
+    }
+    
+
+    int countNodes(TreeNode* root) {
+        if(root){
+            repom(root);
+            return depow(2,gethighoflll(root))-pom;
+        }else{
+            return 0;
+        }
+    }
+};
+
+
+//真是难写啊。。。最后调试的时候，各种加1减1把我给搞蒙了。。。幸好过了

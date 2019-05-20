@@ -1,0 +1,43 @@
+思路：
+快慢指针
+n1每次递增为n1->next；
+n2每次递增为n2->next->next;
+如果n1==n2，那么说明有循环
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(!head) return false;
+        if(!head->next) return false;
+        ListNode* n1=head;
+        ListNode* n2=head->next;
+        while(n1){
+            if(n1==n2) return true;
+            if(n1->next){
+                n1=n1->next;
+            }else{
+                return false;
+            }   
+            if(n2->next){
+                if(n2->next->next){
+                    n2=n2->next->next;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        
+        return false;
+    }
+};

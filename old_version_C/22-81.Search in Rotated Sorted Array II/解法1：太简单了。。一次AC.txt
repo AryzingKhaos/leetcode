@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        vector<int>::iterator it;
+        //int index=0;
+        for(it=nums.begin();it!=nums.end();it++){
+            if(*it==target){
+                return true;
+            }
+        }
+        return false;
+    }
+};

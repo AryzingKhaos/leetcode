@@ -1,0 +1,28 @@
+AC得还是挺快的~~~
+
+
+class Solution {
+public:
+    long A (int k,int l)
+    {
+    	long mutilate=1;
+    	for(int i=k;i>k-l;i--){
+    		mutilate*=i;
+    	}
+    	return mutilate;
+    }
+    
+    long C (int k,int l)
+    {
+        long cd=A(k,l)/A(l,l);
+	    return cd;
+    }
+    
+    
+    int uniquePaths(int m, int n) {
+        if(m==0&&n==0) return 0;
+        if(m+n<2) return 0;
+        long mn=n>m?C(m+n-2,m-1):C(m+n-2,n-1);
+        return mn;
+    }
+};

@@ -1,0 +1,10 @@
+while(root){
+            vec.push_back(root->val);
+            if(root->right){
+                root=root->right;
+            }else if(root->left){
+                root=root->left;
+            }else{
+                break;
+            }
+        }

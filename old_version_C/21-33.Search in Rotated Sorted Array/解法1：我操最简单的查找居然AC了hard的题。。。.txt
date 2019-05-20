@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        vector<int>::iterator it;
+        int index=0;
+        for(it=nums.begin();it!=nums.end();it++){
+            if(*it==target){
+                return index;
+            }else{
+                index++;
+            }
+        }
+        return -1;
+    }
+};

@@ -1,0 +1,76 @@
+写得我一脸血啊。。
+特例情况太多，第一次先是连续进位有判断问题，第二次是不得不开了两个特例
+特例1是假如初始化之后（我的初始化是将数组付值成123456789，但是while一开始就+1了），就直接符合，那么直接返回。
+特例2是假如k*8都不能大于n，说明不管怎么加都无法得到n，所以直接返回空vector。
+
+
+class Solution {
+public:
+
+	int a[9] = { 0 };
+
+	void InitialValue(){//将a数组的值赋值为123456789
+		for (int j = 0; j<9; j++){
+			for (int i = j; i < 9; i++){
+				a[i]++;
+			}
+		}
+	}
+
+	int sumof(int k){
+		int sum = 0;
+		for (int i = 0; i<k; i++){
+			sum += a[i];
+		}
+		return sum;
+	}
+
+	int outof(int e, int k){
+		int start = e;
+		int end = e + k - 1;
+		return (start + end)*k / 2;
+
+	}
+
+	void jinwei(int i,int k){
+		a[i - 1]++;
+		for (int u = i - 1; u<k - 1; u++){
+			a[u + 1] = a[u] + 1;
+		}
+		if (a[i - 1]>9+i-k){
+			jinwei(i - 1,k);
+		}
+	}
+
+
+
+	vector<vector<int>> combinationSum3(int k, int n) {
+		vector<int> item(0, k);
+		vector<vector<int>> group;
+		InitialValue();
+		if(k*8<n) return group;//特例2：假如k*8都小于n，说明以k个数根本不能得到n，所以直接返回空数组group
+		if (sumof(k) == n){//特例1：假如初始化数组之后就能得到n，那么直接装进group里
+    			for (int p = 0; p<k; p++){
+    			item.push_back(a[p]);
+    		}
+    		group.push_back(item);
+    		return group;
+		}
+		int i = k - 1;
+		while (outof(a[0], k) <= n){
+		    a[i]++;
+			if (a[i]>9){
+				jinwei(i,k);
+			}
+			if (sumof(k) == n){//如果数组前k个值的和等于n
+    			for (int p = 0; p<k; p++){
+    				item.push_back(a[p]);
+    			}
+    			group.push_back(item);
+    			item.clear();
+    			//jinwei(i,k);
+			}
+		}
+		return group;
+	}
+};

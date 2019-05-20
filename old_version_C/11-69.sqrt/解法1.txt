@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int mySqrt(int x) {
+        int count=0;
+        int y=x;
+        int digit;
+        
+        if(y<10){
+            digit=1;
+        }else{
+            while(y>10){
+                y/=10;
+                count++;
+            }
+            int powe=count/2;
+            //std::cout<<powe<<std::endl;
+            digit=pow(10,powe);
+            //std::cout<<digit<<std::endl;
+            //std::cin>>pause;
+        }
+        int n=digit;
+        unsigned int s=0;
+        if(!x) return 0;
+        if(x<0) return 0;
+        while(digit>0){
+            if((s+n)*(s+n)==x){
+                return s+n;
+            }else if((s+n)*(s+n)<x&&(s+n+digit)*(s+n+digit)>x){
+                s+=n;
+                digit/=10;
+                n=0;
+                //std::cout<<digit<<std::endl;
+            }else{
+                n+=digit;
+                //std::cout<<digit<<std::endl;
+            }
+        }
+        return s;
+    }
+};

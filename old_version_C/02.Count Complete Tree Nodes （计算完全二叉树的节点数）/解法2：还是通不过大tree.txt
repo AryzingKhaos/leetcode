@@ -1,0 +1,63 @@
+//通不过大tree，而且当总节点数为奇数时，会得到偶数的结果。所以算法本身就不对。
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int yezi=0;
+    bool isYezi(TreeNode* BT){
+        if((!BT->left)&&(!BT->right)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    void countYezi(TreeNode* root){
+        if(isYezi(root)) yezi+=1;
+        if(root->left) countYezi(root->left);
+        if(root->right) countYezi(root->right);
+    }
+
+    int GetHeight(TreeNode* BT){
+    	int HL,HR,MaxH;
+    	if(BT){
+    		HL=GetHeight(BT->left);//求左子树的深度 
+    		HR=GetHeight(BT->right);//求右子树的深度 
+    		MaxH=(HL>HR)?HL:HR;//取左右子树较大的深度 
+    		return(MaxH+1);//返回树的深度 
+    	}
+    	else return 0;//空树深度为0 
+    }
+    
+    int mi(int a,int b){
+        int n=1;
+        for(int i=0;i<b;i++){
+            n*=a;
+        }
+        return n;
+    }
+    
+    int mijia(int a,int b){
+        int n=0;
+        for(int i=0;i<b;i++){
+            n+=mi(a,i);
+        }
+    }
+
+    int countNodes(TreeNode* root) {
+        int g=GetHeight(root);
+        return mijia(2,g-1)-((mi(2,g-1)-yezi)*2);
+        
+        //mi(2,GetHeight(root)-1)是求已知深度的完美二叉树的最下面一层的节点数。比如3层的二叉树，最下面一层结点数为4个。
+        //(mi(2,GetHeight(root)-1)-yezi)*2是多余的结点
+    }
+};

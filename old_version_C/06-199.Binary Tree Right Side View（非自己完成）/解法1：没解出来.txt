@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+
+    int count_l=0;
+    int count_r=0;
+    int diss=0;
+    
+    int gethigh(TreeNode* root){
+        int bl=gethigh(root->left);
+        int br=gethigh(root->right);
+        diss=bl-br;
+        return bl>br?bl:br;
+    }
+    
+    int high=0;
+    vector<int> vec;
+    
+    vector<int> rightSideView(TreeNode* root) {
+        
+        //if(root) vec.push_back(root->val); 
+        high=gethigh(root);
+        if(diss<0){//说明右子树比较高
+            while(root){
+                vec.push_back(root->val);
+                if(root->right){
+                    root=root->right;
+                }else if(root->left){
+                    root=root->left;
+                }else break;
+            }
+        }else{
+            
+        }
+        return vec;
+    }
+};

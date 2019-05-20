@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+	if (matrix.size() == 0) return false;
+	//cout << "matrix.size():" << matrix.size() << endl;
+	//cout << "matrix.size[0]():" << matrix[0].size() << endl;
+	int rowmax = matrix.size() - 1;
+	int colmax = matrix[0].size() - 1;
+	for (int row = 0; row <= rowmax; row++){
+		//cout << "row:"<<row << endl;
+		//cout << "matrix[row][rowmax]:" << matrix[row][rowmax] << endl;
+		if (matrix[row][0] <= target&&matrix[row][colmax] >= target){
+			for (int col = 0; col <= colmax; col++){
+				//cout << "col:" << col << endl;
+				if (matrix[row][col] == target) {
+					return true;
+				}
+				else if (matrix[row][col]>target){
+					return false;
+				}
+			}
+		}
+	}
+	return false;
+}
+};

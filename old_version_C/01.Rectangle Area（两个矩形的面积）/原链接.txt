@@ -1,0 +1,4 @@
+https://leetcode.com/problems/rectangle-area/
+
+非常可惜，不能算是自己解出来的
+最开始的思路是对的，可惜后来跑偏了

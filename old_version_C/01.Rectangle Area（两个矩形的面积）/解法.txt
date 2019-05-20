@@ -1,0 +1,24 @@
+class Solution {
+public:
+    
+    int max(int a ,int b){
+        return a>b?a:b;
+    }
+    
+    int min (int a ,int b){
+        return a<b?a:b;
+    }
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int x,y,v,w,rectangle;
+        int area=(C-A)*(D-B) + (G-E)*(H-F);
+        if (A >= G || B >= H || C <= E || D <= F)  {
+            return area;
+        }
+        x=max(A,E);
+        y=max(B,F);
+        v=min(C,G);
+        w=min(D,H);
+        rectangle=(v-x)*(w-y);
+        return area-rectangle;
+    }
+};

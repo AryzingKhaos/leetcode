@@ -1,0 +1,40 @@
+
+  Definition for a binary tree node.
+  struct TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x)  val(x), left(NULL), right(NULL) {}
+  };
+ 
+class Solution {
+public
+
+    
+    void calsum(TreeNode node,int sum,vectorint &pathnum,vectorvectorint &pathall){
+        if(node==NULL) return;
+        if((!node-left)&&(!node-right)){
+            if(sum==node-val){
+                pathnum.push_back(node-val);
+                pathall.push_back(pathnum);
+                pathnum.pop_back();
+                return;
+            }
+        }else{
+            pathnum.push_back(node-val);
+            calsum(node-left,sum-node-val,pathnum,pathall);
+            calsum(node-right,sum-node-val,pathnum,pathall);
+            pathnum.pop_back();
+        }
+        
+    }
+
+
+    vectorvectorint pathSum(TreeNode root, int sum) {
+        vectorvectorint pathall;
+        vectorint pathnum;
+        if(!root) return pathall;
+        calsum(root,sum,pathnum,pathall);
+        return pathall;
+    }
+};

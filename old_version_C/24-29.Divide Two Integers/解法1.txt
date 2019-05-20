@@ -1,0 +1,40 @@
+解法应该是没错的，然而testcase太恶心了。。。
+要用到位运算，明天想吧
+
+
+class Solution {
+public:
+
+    bool positive(int n){
+        if(n<0) return false;
+        return true;
+    }
+
+    int divide(int dividend, int divisor) {
+        int i=0;
+        long sum=0;
+        long divid=dividend;
+        bool change=false;
+        if(!positive(divid)&&positive(divisor)){
+            divid=-divid;
+            change=true;
+        }else if(positive(divid)&&!positive(divisor)){
+            divisor=-divisor;
+            change=true;
+        }else if(!positive(divid)&&!positive(divisor)){
+            divid=-divid;
+            divisor=-divisor;
+        }
+
+        for(i=0;;i++){
+            if(sum<=divid&&sum+divisor>divid){
+                if(change==false) {
+                    return i;
+                }else{
+                    return -i;
+                }
+            }
+            sum+=divisor;
+        }
+    }
+};

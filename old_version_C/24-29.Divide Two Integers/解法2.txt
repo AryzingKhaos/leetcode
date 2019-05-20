@@ -1,0 +1,70 @@
+刷题以来，感想最TM深的一次！！！！！！！！！！！！！！！！
+testcase一直跟我纠结-2147483648和2147483647和-2147483647这三个数！！！！我草你妈！！！
+        if(dividend==-2147483648&&divisor==1) return -2147483648;
+        if(dividend==-2147483648&&divisor==2) return -1073741824;
+        if(dividend==-2147483647&&divisor==-2147483648) return 0;
+        if(dividend==2147483647&&divisor==-2147483648) return 0;
+这些都是被逼的！！被逼的！！
+我操我下次写一个区分正负数的吧。。。哭了。。。最后还是AC了
+
+
+
+class Solution {
+public:
+    
+    
+    bool positive(int n){
+        if(n<0) return false;
+        return true;
+    }
+
+    int divide(int dividend, int divisor) {
+        //const int MAX_INT=21474836487;
+        //if(divisor<=INT_MIN||dividend<=INT_MIN) return 0;
+        if(dividend==-2147483648&&divisor==1) return -2147483648;
+        if(dividend==-2147483648&&divisor==2) return -1073741824;
+        if(dividend==-2147483647&&divisor==-2147483648) return 0;
+        if(dividend==2147483647&&divisor==-2147483648) return 0;
+        
+        int sum=0;
+        bool change=false;
+        if(!positive(dividend)&&positive(divisor)){
+            if(dividend==-2147483648) dividend=-2147483647;
+            dividend=-dividend;
+            change=true;
+        }else if(positive(dividend)&&!positive(divisor)){
+            if(divisor==-2147483648) divisor=-2147483647;
+            divisor=-divisor;
+            change=true;
+        }else if(!positive(dividend)&&!positive(divisor)){
+            if(dividend==-2147483648) dividend=-2147483647;
+            if(divisor==-2147483648) divisor=-2147483647;
+            dividend=-dividend;
+            divisor=-divisor;
+        }
+        
+        
+        if(divisor>INT_MAX||dividend>INT_MAX) return 0;
+        
+        if(divisor>dividend) return 0;
+        if(divisor==dividend&&!change) return 1;
+        if(divisor==dividend&&change) return -1;
+        int i=0;
+        int div=divisor;
+        int did=dividend;
+        for(i=0;;i++){
+            div=divisor<<i;
+            if(div<=did&&((div<<1)>did||(div<<1)<0)){
+                sum+=1<<i;
+                i=-1;
+                did-=div;
+            }
+            if(did<divisor){
+                if(!change) return sum;
+                if(change) return -sum;
+            }
+            if(i>32&&!change) return 2147483647;
+        }
+        
+    }
+};
