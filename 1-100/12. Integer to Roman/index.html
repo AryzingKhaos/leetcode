@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+<script>
+        /**
+ * @param {number} num
+ * @return {string}
+ */
+
+var addRomanChar = function(romanChar, num, upperRomanChar){
+    if(num <= 3){
+        return (romanChar + romanChar + romanChar + romanChar).slice(0,num);
+    }else{
+        return romanChar + upperRomanChar;
+    }
+}
+
+var intToRoman = function(num) {
+    let symbolKVvalue = [{
+        symbol: 'I',
+        value: 1,
+    },{
+        symbol: 'V',
+        value: 5,
+    },{
+        symbol: 'X',
+        value: 10,
+    },{
+        symbol: 'L',
+        value: 50,
+    },{
+        symbol: 'C',
+        value: 100,
+    },{
+        symbol: 'D',
+        value: 500,
+    },{
+        symbol: 'M',
+        value: 1000,
+    }];
+    let valArr = symbolKVvalue.concat([]).reverse();
+    let finalStr = '';
+    valArr.forEach((item, index) => {
+        let dvd = parseInt(num / item.value);
+        if( dvd > 0){
+            let upperRomanChar = '';
+            if(valArr[index-1]) upperRomanChar = valArr[index-1].symbol
+            finalStr += addRomanChar(item.symbol, dvd, upperRomanChar);
+            num = num % item.value;
+        }
+    })
+    return finalStr.replace('DCD','CM').replace('LXL','XC').replace('VIV','IX');
+};
+</script>
+<script>
+    console.log(intToRoman(3));
+    console.log(intToRoman(4));
+    console.log(intToRoman(9));
+    console.log(intToRoman(58));
+    console.log(intToRoman(1994));
+</script>
+</body>
+</html>
