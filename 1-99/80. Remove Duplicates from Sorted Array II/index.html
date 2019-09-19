@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    /**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function(nums) {
+    var i = 0;
+    while(i < nums.length){
+        if(!isNaN(nums[i+1]) && nums[i+1] == nums[i]){
+            nums.splice(i,1);
+        }
+        i++;
+    }
+    return nums;
+    // return nums.length;
+};
+</script>
+
+<script>
+    console.log(removeDuplicates([1,1,1,2,2,3]));
+    console.log(removeDuplicates([0,0,1,1,1,1,2,3,3]));
+    
+</script>
+</body>
+</html>
